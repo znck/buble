@@ -5,13 +5,10 @@ export default class WithStatement extends Node {
     if (transforms.stripWith) {
       this.program.inWith = (this.program.inWith || 0) + 1
       // remove surrounding with block
+      const context = code.slice(this.object.start, this.object.end)
       code.remove(this.start, this.body.start + 1)
       code.remove(this.end - 1, this.end)
-      if (transforms.stripWithFunctional) {
-        code.insertRight(this.start, "var _c=_vm._c;")
-      } else {
-        code.insertRight(this.start, `var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;`)
-      }
+      code.insertRight(this.start, `var __vue_context__ = ${context}`)
       super.transpile(code, transforms)
       this.program.inWith--
     } else {

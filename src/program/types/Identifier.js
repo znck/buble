@@ -61,10 +61,12 @@ export default class Identifier extends Node {
 			!(this.parent.parent.type === 'ObjectPattern') &&
 			// skip globals + commonly used shorthands
 			!globals[this.name] &&
+			// local import
+			!/^__vue_[a-z0-9_]+__$/.test(this.name) &&
 			// not already in scope
 			!this.findScope(false).contains(this.name)
 		) {
-			code.overwrite(this.start, this.end, `_vm.${this.name}`)
+			code.overwrite(this.start, this.end, `__vue_context__.${this.name}`)
 		}
 	}
 }

@@ -8,21 +8,21 @@ module.exports = [
     input: `
 function render () {
   with (this) {
-    return _h('div', items.map(function (item) {
-      return _h('p', {
+    return __vue_h__('div', items.map(function (item) {
+      return __vue_h__('p', {
         class: [a, b + 'c', c ? d : item.e],
         style: { color, item, [prop]: true },
         inlineTemplate: {
           render: function () {
-            with (this) {
-              return _h('span', ['hi', arguments[1]])
-}
+            with ({ any: this }) {
+              return __vue_h__('span', [hi, arguments[1]])
+            }
           }
         }
       }, item.tags.map(function (tag) {
-        return _c('span', [item.id, tag.text, foo, a[b]])
+        return __vue_h__('span', [item.id, tag.text, foo, a[b]])
       }), item.stuff.map(([a, b], { c }) => {
-        return _h('p', [a, b, c])
+        return __vue_h__('p', [a, b, c])
       }))
     }))
 }
@@ -30,26 +30,26 @@ function render () {
 `,
     output: `
 function render () {
-  var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-    return _h('div', _vm.items.map(function (item) {
-      return _h('p', {
-        class: [_vm.a, _vm.b + 'c', _vm.c ? _vm.d : item.e],
-        style: ( _obj = { color: _vm.color, item: item }, _obj[_vm.prop] = true, _obj ),
+  var __vue_context__ = this
+    return __vue_h__('div', __vue_context__.items.map(function (item) {
+      return __vue_h__('p', {
+        class: [__vue_context__.a, __vue_context__.b + 'c', __vue_context__.c ? __vue_context__.d : item.e],
+        style: ( _obj = { color: __vue_context__.color, item: item }, _obj[__vue_context__.prop] = true, _obj ),
         inlineTemplate: {
           render: function () {
-            var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-              return _h('span', ['hi', arguments[1]])
-
+            var __vue_context__ = { any: this }
+              return __vue_h__('span', [__vue_context__.hi, arguments[1]])
+            
           }
         }
       }, item.tags.map(function (tag) {
-        return _c('span', [item.id, tag.text, _vm.foo, _vm.a[_vm.b]])
+        return __vue_h__('span', [item.id, tag.text, __vue_context__.foo, __vue_context__.a[__vue_context__.b]])
       }), item.stuff.map(function (ref, ref$1) {
         var a = ref[0];
         var b = ref[1];
         var c = ref$1.c;
 
-        return _h('p', [a, b, c])
+        return __vue_h__('p', [a, b, c])
       }))
       var _obj;
     }))

@@ -6,7 +6,7 @@ export default class Property extends Node {
 	transpile ( code, transforms ) {
 		if ( transforms.conciseMethodProperty && !this.computed && this.parent.type !== 'ObjectPattern' ) {
 			if ( this.shorthand ) {
-				code.insertRight( this.start, `${this.key.name}: ${this.shouldPrefix() ? '_vm.' : ''}` );
+				code.insertRight( this.start, `${this.key.name}: ${this.shouldPrefix() ? '__vue_context__.' : ''}` );
 			} else if ( this.method ) {
 				let name = '';
 				if ( this.program.options.namedFunctionExpressions !== false ) {
@@ -43,6 +43,7 @@ export default class Property extends Node {
 		if (
 			this.program.inWith > 0 &&
 			!globals[this.key.name] &&
+			!/^__vue_[a-z0-9_]+__$/.test(this.key.name) &&
 			!this.findScope(false).contains(this.key.name)
 		) {
 			return true
