@@ -62,7 +62,7 @@ export default class Identifier extends Node {
 			// skip globals + commonly used shorthands
 			!globals[this.name] &&
 			// local import
-			!/^__vue_[a-z0-9_]+__$/.test(this.name) &&
+			!/^__vue_[a-z0-9_]+__$/i.test(this.name) &&
 			// not already in scope
 			!this.findScope(false).contains(this.name)
 		) {

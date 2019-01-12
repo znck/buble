@@ -8,7 +8,7 @@ export default class WithStatement extends Node {
       const context = code.slice(this.object.start, this.object.end)
       code.remove(this.start, this.body.start + 1)
       code.remove(this.end - 1, this.end)
-      code.insertRight(this.start, `var __vue_context__ = ${context}`)
+      code.insertRight(this.start, `const __vue_context__ = ${context};`)
       super.transpile(code, transforms)
       this.program.inWith--
     } else {

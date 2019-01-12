@@ -43,7 +43,7 @@ export default class Property extends Node {
 		if (
 			this.program.inWith > 0 &&
 			!globals[this.key.name] &&
-			!/^__vue_[a-z0-9_]+__$/.test(this.key.name) &&
+			!/^__vue_[a-z0-9_]+__$/i.test(this.key.name) &&
 			!this.findScope(false).contains(this.key.name)
 		) {
 			return true
