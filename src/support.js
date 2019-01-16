@@ -73,5 +73,6 @@ export const features = [
 
 	// additional transforms, not from
 	// https://featuretests.io
-	'reservedProperties'
+	'reservedProperties',
+	'objectRestSpread'
 ];

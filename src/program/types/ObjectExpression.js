@@ -20,7 +20,7 @@ export default class ObjectExpression extends Node {
 			}
 		}
 
-		if ( spreadPropertyCount ) {
+		if ( spreadPropertyCount && transforms.objectRestSpread ) {
 			if ( !this.program.options.objectAssign ) {
 				throw new CompileError( this, 'Object spread operator requires specified objectAssign option with \'Object.assign\' or polyfill helper.' );
 			}
@@ -49,6 +49,15 @@ export default class ObjectExpression extends Node {
 			firstPropertyStart = this.properties[0].start;
 			code.overwrite( this.start, firstPropertyStart, `${this.program.options.objectAssign}({}, `);
 			code.overwrite( this.properties[ this.properties.length - 1 ].end, this.end, ')' );
+		} else if (spreadPropertyCount) {
+			let i = this.properties.length;
+			while (i--) {
+				const prop = this.properties[i];
+
+				if (prop.type === 'SpreadProperty') {
+					code.insertRight(prop.start, '...');
+				}
+			}
 		}
 
 		if ( computedPropertyCount && transforms.computedProperty ) {
